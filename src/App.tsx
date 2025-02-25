@@ -10,6 +10,10 @@ export default function App() {
     }
   }
 
+  function reset() {
+    setHitSquares([]);
+  }
+
   return (
     <>
       <h1 className="text-center">Battleships</h1>
@@ -25,6 +29,10 @@ export default function App() {
             />
           ))}
         </div>
+      </div>
+      
+      <div className='text-center'>
+        <button onClick={reset}>Reset</button>
       </div>
     </>
   )
