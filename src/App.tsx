@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import Square from './components/Square.tsx';
 
 export default function App() {
+  const [hitSquares, setHitSquares] = useState<number[]>([]);
+
+  function fire(index: number) {
+    if (!hitSquares.includes(index)) {
+      setHitSquares(prevHitSquares => [...prevHitSquares, index]);
+    }
+  }
 
   return (
     <>
@@ -8,15 +16,14 @@ export default function App() {
 
       <div className="dashboard">
         <div className="board">
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
-          <Square />
+          {Array.from({ length: 9 }, (_, i) => (
+            <Square
+              key={i}
+              id={i}
+              handleClick={() => fire(i)}
+              hitSquares={hitSquares}
+            />
+          ))}
         </div>
       </div>
     </>
