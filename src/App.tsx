@@ -23,16 +23,15 @@ export default function App() {
           {Array.from({ length: 9 }, (_, i) => (
             <Square
               key={i}
-              id={i}
               handleClick={() => fire(i)}
-              hitSquares={hitSquares}
+              isHit={hitSquares.includes(i)}
             />
           ))}
         </div>
       </div>
       
       <div className='text-center'>
-        <button onClick={reset}>Reset</button>
+        <button onClick={reset} data-testid="reset-button">Reset</button>
       </div>
     </>
   )
