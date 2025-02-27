@@ -20,10 +20,6 @@ export default function App() {
     }      
   }
 
-  function checkBoatHit(index: number) {
-    return boats.some(boat => boat.includes(index));
-  }
-
   function reset() {
     setHitSquares([]);
     setBoard();
@@ -39,8 +35,9 @@ export default function App() {
             <Square
               key={i}
               handleClick={() => fire(i)}
-              isHit={hitSquares.includes(i)}
-              isHitBoat={checkBoatHit(i)}
+              index={i}
+              boats={boats}
+              hitSquares={hitSquares}
             />
           ))}
         </div>

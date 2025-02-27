@@ -2,17 +2,22 @@ import styled from "styled-components";
 
 type SquareProps = {
     handleClick: () => void;
-    isHit: boolean;
-    isHitBoat: boolean;
+    index: number;
+    boats: number[][];
+    hitSquares: number[];
 };
 
-export default function Square({handleClick, isHit, isHitBoat}: SquareProps) {
+export default function Square({handleClick, index, boats, hitSquares}: SquareProps) {
+    const isHit = hitSquares.includes(index);
+    const isBoat = boats.some(boat => boat.includes(index));
+    const isHitBoat = isHit && isBoat;
 
     return (
         <StyledSquare 
             onClick={handleClick}
             $isHitBoat={isHitBoat}
             data-testid="square"
+            data-boat={isBoat}
         >
             {isHit ? 'X' : ''}
         </StyledSquare>

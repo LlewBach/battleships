@@ -11,6 +11,13 @@ describe('App', () => {
         expect(squares).toHaveLength(9);
     });
 
+    it('should initialize one boat on mount', () => {
+        render(<App />);
+        const squares = screen.getAllByTestId("square");
+        const boatSquares = squares.filter(square => square.dataset.boat === "true");
+        expect(boatSquares).toHaveLength(1);
+    });
+
     it('should update square content state when clicking a square', () => {
         render(<App />);
         const square = screen.getAllByTestId("square")[0];
