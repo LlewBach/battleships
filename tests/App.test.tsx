@@ -11,14 +11,14 @@ describe('App', () => {
         expect(squares).toHaveLength(9);
     });
 
-    it('should update state when clicking a square', () => {
+    it('should update square content state when clicking a square', () => {
         render(<App />);
         const square = screen.getAllByTestId("square")[0];
         fireEvent.click(square);
         expect(square).toHaveTextContent("X");
     });
 
-    it('should reset state when clicking the reset button', () => {
+    it('should reset board when clicking the reset button', () => {
         render(<App />);
         const square = screen.getAllByTestId("square")[0];
         fireEvent.click(square);

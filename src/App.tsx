@@ -1,17 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Square from './components/Square.tsx';
 
 export default function App() {
+  const [boats, setBoats] = useState<number[][]>([]);
   const [hitSquares, setHitSquares] = useState<number[]>([]);
+
+  useEffect(() => {
+    setBoard();
+  }, []);
+
+  function setBoard() {
+    const newBoat = [Math.floor(Math.random() * 9)];
+    setBoats([newBoat]);
+  }
 
   function fire(index: number) {
     if (!hitSquares.includes(index)) {
       setHitSquares(prevHitSquares => [...prevHitSquares, index]);
-    }
+    }      
+  }
+
+  function checkBoatHit(index: number) {
+    return boats.some(boat => boat.includes(index));
   }
 
   function reset() {
     setHitSquares([]);
+    setBoard();
   }
 
   return (
@@ -25,6 +40,7 @@ export default function App() {
               key={i}
               handleClick={() => fire(i)}
               isHit={hitSquares.includes(i)}
+              isHitBoat={checkBoatHit(i)}
             />
           ))}
         </div>
