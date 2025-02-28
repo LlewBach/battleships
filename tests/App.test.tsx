@@ -15,7 +15,7 @@ describe('App', () => {
         render(<App />);
         const squares = screen.getAllByTestId("square");
         const boatSquares = squares.filter(square => square.dataset.boat === "true");
-        expect(boatSquares).toHaveLength(1);
+        expect(boatSquares).toHaveLength(2);
     });
 
     it('should update square content state when clicking a square', () => {
