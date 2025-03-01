@@ -1,17 +1,23 @@
-import { useState, useEffect } from 'react';
-import Square from './components/Square.tsx';
+import { useState } from 'react';
+import styled from "styled-components";
+import Form from './components/Form.tsx';
+import Board from './components/Board.tsx';
 
 export default function App() {
+  const [formData, setFormData] = useState({ gridWidth: 3 });
+  const [isGameOn, setIsGameOn] = useState(false);
   const [boats, setBoats] = useState<number[][]>([]);
   const [hitSquares, setHitSquares] = useState<number[]>([]);
 
-  const gridWidth = 3;
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const newGridWidth = Number(event.currentTarget.gridWidth.value); // ✅ Type-safe access
+    setFormData({ gridWidth: newGridWidth });
+    setBoard(newGridWidth);
+    setIsGameOn(true);
+  }
 
-  useEffect(() => {
-    setBoard();
-  }, []);
-
-  function setBoard() {
+  function setBoard(gridWidth: number) {
     const boatLength = 2;
     const newBoat: number[] = [];
     const possibilities = [];
@@ -30,45 +36,42 @@ export default function App() {
       if (possibilities.length > 0) {
         const secondSquare = possibilities[Math.floor(Math.random() * possibilities.length)];
         newBoat.push(firstSquare, secondSquare);
-        break;
+        // break;
       }
     }
 
     setBoats([newBoat]);
   }
 
-  function fire(index: number) {
-    if (!hitSquares.includes(index)) {
-      setHitSquares(prevHitSquares => [...prevHitSquares, index]);
-    }      
-  }
-
   function reset() {
+    setIsGameOn(false);
     setHitSquares([]);
-    setBoard();
   }
 
   return (
     <>
       <h1 className="text-center">Battleships</h1>
 
-      <div className="dashboard">
-        <div className="board">
-          {Array.from({ length: gridWidth ** 2 }, (_, i) => (
-            <Square
-              key={i}
-              handleClick={() => fire(i)}
-              index={i}
-              boats={boats}
-              hitSquares={hitSquares}
-            />
-          ))}
-        </div>
-      </div>
+      {!isGameOn && <Form formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />}
+
+      {isGameOn && <div className="dashboard">
+        <Board 
+          formData={formData} 
+          boats={boats} 
+          hitSquares={hitSquares}
+          setHitSquares={setHitSquares}
+        />
+      </div>}
       
       <div className='text-center'>
-        <button onClick={reset} data-testid="reset-button">Reset</button>
+        <StyledResetButton onClick={reset} data-testid="reset-button">Reset</StyledResetButton>
       </div>
     </>
   )
 }
+
+const StyledResetButton = styled.button`
+  margin: 10px auto;
+  padding: 5px 10px;
+  border-radius: 5px;
+`;

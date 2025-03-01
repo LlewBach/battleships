@@ -17,7 +17,7 @@ export default function Square({handleClick, index, boats, hitSquares}: SquarePr
             onClick={handleClick}
             $isHitBoat={isHitBoat}
             data-testid="square"
-            data-boat={isBoat}
+            data-boat={isBoat ? "true" : "false"}
         >
             {isHit ? 'X' : ''}
         </StyledSquare>

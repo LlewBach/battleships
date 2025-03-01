@@ -7,12 +7,3 @@ body {
     justify-content: center;
     
 }
-
-.board {
-    border: 1px solid red;
-    margin: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    align-content: center;
-}
